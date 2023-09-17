@@ -1,9 +1,6 @@
 import { ExpoConfig } from 'expo/config'
 
-export const colors = {
-  dark: '#232323',
-  light: '#f5f5f5',
-}
+export const backgroundColor = '#222227'
 
 export default (): ExpoConfig => ({
   name: 'Money Tracker',
@@ -12,33 +9,32 @@ export default (): ExpoConfig => ({
 
   orientation: 'default',
   userInterfaceStyle: 'dark',
-  primaryColor: colors.light,
-  backgroundColor: colors.dark,
+  backgroundColor: backgroundColor,
 
   androidStatusBar: {
-    backgroundColor: colors.dark,
+    backgroundColor: backgroundColor,
     barStyle: 'light-content',
   },
 
   assetBundlePatterns: ['**/*'],
   icon: './assets/icon.png',
   splash: {
-    backgroundColor: colors.dark,
+    backgroundColor: backgroundColor,
     resizeMode: 'contain',
     image: './assets/splash.png',
   },
 
   platforms: ['android', 'web'],
   android: {
-    backgroundColor: colors.dark,
+    backgroundColor: backgroundColor,
     package: 'com.nazmussayad.moneytracker',
     adaptiveIcon: {
-      backgroundColor: colors.dark,
+      backgroundColor: backgroundColor,
       foregroundImage: './assets/adaptive-icon.png',
     },
   },
   web: {
-    backgroundColor: colors.dark,
+    backgroundColor: backgroundColor,
     favicon: './assets/favicon.png',
   },
 

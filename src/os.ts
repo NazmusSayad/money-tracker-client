@@ -1,5 +1,6 @@
 import { Platform } from 'react-native'
-export default {
+
+export default Object.freeze({
   isWeb: Platform.OS === 'web',
   isAndroid: Platform.OS === 'android',
-}
+})
