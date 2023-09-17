@@ -1,37 +1,50 @@
 import { ExpoConfig } from 'expo/config'
 
+export const colors = {
+  dark: '#232323',
+  light: '#f5f5f5',
+}
+
 export default (): ExpoConfig => ({
   name: 'Money Tracker',
   slug: 'money-tracker',
   version: '1.0.0',
+
   orientation: 'default',
   userInterfaceStyle: 'dark',
+  primaryColor: colors.light,
+  backgroundColor: colors.dark,
+
+  androidStatusBar: {
+    backgroundColor: colors.dark,
+    barStyle: 'light-content',
+  },
 
   assetBundlePatterns: ['**/*'],
   icon: './assets/icon.png',
   splash: {
-    image: './assets/splash.png',
+    backgroundColor: colors.dark,
     resizeMode: 'contain',
-    backgroundColor: '#ffffff',
+    image: './assets/splash.png',
   },
 
+  platforms: ['android', 'web'],
   android: {
-    package: 'com.expo.boilerplate',
+    backgroundColor: colors.dark,
+    package: 'com.nazmussayad.moneytracker',
     adaptiveIcon: {
+      backgroundColor: colors.dark,
       foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#ffffff',
     },
   },
-  ios: {
-    supportsTablet: true,
-  },
   web: {
+    backgroundColor: colors.dark,
     favicon: './assets/favicon.png',
   },
 
   extra: {
     eas: {
-      projectId: '8c72d69a-b0c9-4210-8f7e-2ca7d62855dc',
+      projectId: '3e1874b6-1096-430b-b791-ec02ba167ca0',
     },
   },
 })
