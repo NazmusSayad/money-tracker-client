@@ -1,11 +1,12 @@
-import { ReactNode } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { Entypo } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
 
 type Link = {
-  icon: ReactNode
+  Icon: any
+  iconProps?: object
+
   to: string
   main?: boolean
   shortLabel: string
@@ -14,28 +15,36 @@ type Link = {
 
 const links: Link[] = [
   {
-    icon: <AntDesign name="book" size={24} />,
+    Icon: AntDesign,
+    iconProps: { name: 'book' },
+
     to: '/transaction',
     main: true,
     shortLabel: 'Trans.',
     longLabel: 'Transaction',
   },
   {
-    icon: <Ionicons name="md-stats-chart-outline" size={24} />,
+    Icon: Ionicons,
+    iconProps: { name: 'md-stats-chart-outline' },
+
     to: '/statistics',
     main: true,
     shortLabel: 'Stats',
     longLabel: 'Statistics',
   },
   {
-    icon: <Feather name="database" size={24} />,
+    Icon: Feather,
+    iconProps: { name: 'database' },
+
     to: '/accounts',
     main: true,
     shortLabel: 'Acc.',
     longLabel: 'Accounts',
   },
   {
-    icon: <Entypo name="dots-three-horizontal" size={24} />,
+    Icon: Entypo,
+    iconProps: { name: 'dots-three-horizontal' },
+
     to: '/more',
     main: true,
     shortLabel: 'More',

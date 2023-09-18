@@ -1,14 +1,82 @@
-import { ButtonProps, Button } from 'react-native-paper'
-import { useNavigate } from 'react-router-dom'
+import os from '@/os'
+import { injectCSS } from '@/utils/style'
+import { useMemo, useState } from 'react'
+import { NavLink as LinkDom, resolvePath } from 'react-router-dom'
+import { Link as LinkNative, useLocation } from 'react-router-native'
 
-export type LinkProps = ButtonProps & { to: string }
-export default function Link({ to, onPress, ...props }: LinkProps) {
-  const navigate = useNavigate()
-
-  function handlePress(e: any) {
-    navigate(to)
-    onPress && onPress(e)
+const className = 'react-router-native-or-dom-link-element'
+injectCSS(`
+  .${className} {
+    opacity: 1;
+    text-decoration: none;
+    transition: opacity 0.1s ease-in-out;
   }
+    
+  .${className}:hover {
+    opacity: 0.95;
+  }
+  
+  .${className}:focus {
+    outline-width: 2px;
+    outline-style: dashed;
+    outline-color: gray;
+    outline-offset: -3px;
+    opacity: 0.9;
+  }
+    
+  .${className}:active {
+    opacity: 0.5;
+  }
+  
+  .${className}:visited {
+    color: inherit;
+  }
+`)
 
-  return <Button {...props} onPress={handlePress} />
+type RenderState = {
+  isDown: boolean
+  isActive: boolean
+  isHover: boolean
+  isFocus: boolean
+}
+
+type LinkProps = {
+  render: (RenderState) => any
+  to: string
+  replace?: boolean
+  state?: any
+}
+
+export default function Link({ render, ...props }: LinkProps) {
+  const location = useLocation()
+  const [isDown, setIsDown] = useState(false)
+  const [isHover, setIsHover] = useState(false)
+  const [isFocus, setIsFocus] = useState(false)
+  const isActive = resolvePath(props.to).pathname === location.pathname
+
+  const children = useMemo(() => {
+    return render({ isDown, isActive, isHover, isFocus })
+  }, [props.to, isDown, isHover, isActive])
+
+  return os.isWeb ? (
+    <LinkDom
+      {...props}
+      children={children}
+      className={className}
+      onPointerDown={() => setIsDown(true)}
+      onPointerUp={() => setIsDown(false)}
+      onFocus={() => setIsFocus(true)}
+      onBlur={() => setIsFocus(false)}
+    />
+  ) : (
+    <LinkNative
+      {...props}
+      children={children}
+      style={{}}
+      onPressIn={() => setIsDown(true)}
+      onPressOut={() => setIsDown(false)}
+      onFocus={() => setIsFocus(true)}
+      onBlur={() => setIsFocus(false)}
+    />
+  )
 }

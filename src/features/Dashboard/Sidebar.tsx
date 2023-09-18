@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
-import Link from '@/components/Link'
 import links from './links'
 import { Text } from 'react-native-paper'
+import Link from '@/components/Link'
 
 type Props = {
   isMobile: boolean
@@ -18,20 +18,40 @@ export default function Sidebar(props: Props) {
         )}
       >
         {links.map((link) => (
-          <Link key={link.to} to={link.to} style={{ margin: 0 }} labelStyle={{ margin: 0 }}>
-            <View
-              style={$style(
-                styles.ItemContent,
-                props.isMobile && styles.ItemContentMobile,
-                props.isTablet && styles.ItemContentTablet
-              )}
-            >
-              {link.icon}
-              {(props.isTablet && !props.isMobile) || (
-                <Text>{props.isMobile ? link.shortLabel : link.longLabel}</Text>
-              )}
-            </View>
-          </Link>
+          <View key={link.to} style={styles.linkContainer}>
+            <Link
+              to={link.to}
+              render={(state) => {
+                const linkStyles = $style(
+                  styles.link,
+                  state.isActive && styles.linkActive
+                )
+
+                return (
+                  <View
+                    style={$style(
+                      styles.ItemContent,
+                      props.isMobile && styles.ItemContentMobile,
+                      props.isTablet && styles.ItemContentTablet
+                    )}
+                  >
+                    {
+                      <link.Icon
+                        {...link.iconProps}
+                        style={linkStyles}
+                        size={20}
+                        color={linkStyles.color}
+                      />
+                    }
+
+                    <Text style={linkStyles}>
+                      {props.isTablet ? link.shortLabel : link.longLabel}
+                    </Text>
+                  </View>
+                )
+              }}
+            />
+          </View>
         ))}
       </View>
     </View>
@@ -51,19 +71,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
 
+  linkContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+
   ItemContent: {
     flexDirection: 'row',
-    padding: 5,
     width: '100%',
+    padding: 5,
   },
 
   ItemContentTablet: {
-    width: 'auto',
+    minWidth: 50,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   ItemContentMobile: {
+    minWidth: 50,
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 5,
+  },
+
+  link: {
+    color: 'red',
+  },
+
+  linkActive: {
+    color: 'blue',
   },
 })
