@@ -42,12 +42,14 @@ type RenderState = {
 
 type LinkProps = {
   render: (RenderState) => any
+  forceRender?: boolean
+
   to: string
   replace?: boolean
   state?: any
 }
 
-export default function Link({ render, ...props }: LinkProps) {
+export default function Link({ render, forceRender, ...props }: LinkProps) {
   const location = useLocation()
   const [isDown, setIsDown] = useState(false)
   const [isHover, setIsHover] = useState(false)
@@ -56,7 +58,7 @@ export default function Link({ render, ...props }: LinkProps) {
 
   const children = useMemo(() => {
     return render({ isDown, isActive, isHover, isFocus })
-  }, [props.to, isDown, isHover, isActive])
+  }, [props.to, isDown, isHover, isActive, forceRender && {}])
 
   return os.isWeb ? (
     <LinkDom

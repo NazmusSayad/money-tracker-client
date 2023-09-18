@@ -21,6 +21,7 @@ export default function Sidebar(props: Props) {
           <View key={link.to} style={styles.linkContainer}>
             <Link
               to={link.to}
+              forceRender
               render={(state) => {
                 const linkStyles = $style(
                   styles.link,
@@ -83,15 +84,13 @@ const styles = StyleSheet.create({
   },
 
   ItemContentTablet: {
-    minWidth: 50,
+    padding: 7.5,
     flexDirection: 'column',
     alignItems: 'center',
   },
 
   ItemContentMobile: {
     minWidth: 50,
-    flexDirection: 'column',
-    alignItems: 'center',
   },
 
   link: {
