@@ -3,14 +3,20 @@ import { Button } from 'react-native'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { useApi } from './http'
-import Login from '@/features/Login'
 import LandingPage from '@/features/LandingPage'
+import Login from '@/features/Login'
+import Dashboard from '@/features/Dashboard'
+import Transaction from '@/features/Transaction'
+import Statistics from '@/features/Statistics'
+import Accounts from '@/features/Accounts'
+import NavigationMore from '@/features/NavigationMore'
 
 export default function Router() {
   const api = useApi()
   const isLoggedIn = $useStore((state) => state.auth.isLoggedIn)
 
   useEffect(() => {
+    if (!isLoggedIn) return
     ;(async () => {
       const { data } = await api.get<[{ jwt_token: string }]>('/auth/token')
       console.log('JWT_TOKEN updated!')
@@ -20,7 +26,8 @@ export default function Router() {
 
   return (
     <Routes>
-      {isLoggedIn ? privateRoutes : publicRoutes}
+      {/* {isLoggedIn ? privateRoutes : publicRoutes} */}
+      {privateRoutes}
       <Route path="/about" element={<Button title="About" />} />
     </Routes>
   )
@@ -36,7 +43,14 @@ const publicRoutes = (
 
 const privateRoutes = (
   <>
-    <Route index element={<Button title="Dashboard" />} />
-    <Route path="/login" element={<Navigate to="/" />} />
+    <Route element={<Dashboard />}>
+      <Route index element={<Navigate to="/transaction" />} />
+      <Route path="/transaction" element={<Transaction />} />
+      <Route path="/statistics" element={<Statistics />} />
+      <Route path="/accounts" element={<Accounts />} />
+      <Route path="/more" element={<NavigationMore />} />
+    </Route>
+
+    <Route path="/login" element={<Navigate to="/accounts" />} />
   </>
 )
