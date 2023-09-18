@@ -1,8 +1,14 @@
+import {
+  useLocation,
+  useNavigate,
+  Link as LinkNative,
+} from 'react-router-native'
+import { useMemo, useState } from 'react'
+import { ButtonProps, Button } from 'react-native-paper'
+import { NavLink as LinkDom, resolvePath } from 'react-router-dom'
+
 import os from '@/os'
 import { injectCSS } from '@/utils/style'
-import { useMemo, useState } from 'react'
-import { NavLink as LinkDom, resolvePath } from 'react-router-dom'
-import { Link as LinkNative, useLocation } from 'react-router-native'
 
 const className = 'react-router-native-or-dom-link-element'
 injectCSS(`
@@ -49,7 +55,7 @@ type LinkProps = {
   state?: any
 }
 
-export default function Link({ render, forceRender, ...props }: LinkProps) {
+export function Link({ render, forceRender, ...props }: LinkProps) {
   const location = useLocation()
   const [isDown, setIsDown] = useState(false)
   const [isHover, setIsHover] = useState(false)
@@ -81,4 +87,16 @@ export default function Link({ render, forceRender, ...props }: LinkProps) {
       onBlur={() => setIsFocus(false)}
     />
   )
+}
+
+type LinkButtonProps = ButtonProps & { to: string }
+export function LinkButton({ to, onPress, ...props }: LinkButtonProps) {
+  const navigate = useNavigate()
+
+  function handlePress(e: any) {
+    navigate(to)
+    onPress && onPress(e)
+  }
+
+  return <Button {...props} onPress={handlePress} />
 }

@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import links from './links'
 import { Text } from 'react-native-paper'
-import Link from '@/components/Link'
+import { Link } from '@/components/Link'
 
 type Props = {
   isMobile: boolean
@@ -80,13 +80,17 @@ const styles = StyleSheet.create({
   ItemContent: {
     flexDirection: 'row',
     width: '100%',
-    padding: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+
+    alignItems: 'center',
+    gap: 7.5,
   },
 
   ItemContentTablet: {
+    gap: 0,
     padding: 7.5,
     flexDirection: 'column',
-    alignItems: 'center',
   },
 
   ItemContentMobile: {

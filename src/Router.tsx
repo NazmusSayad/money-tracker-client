@@ -26,8 +26,8 @@ export default function Router() {
 
   return (
     <Routes>
-      {/* {isLoggedIn ? privateRoutes : publicRoutes} */}
-      {privateRoutes}
+      {isLoggedIn ? privateRoutes : publicRoutes}
+      {/* {privateRoutes} */}
       <Route path="/about" element={<Button title="About" />} />
     </Routes>
   )
@@ -38,6 +38,11 @@ const publicRoutes = (
     <Route index element={<LandingPage />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Button title="Register" />} />
+
+    <Route path="/transaction" element={<Navigate to="/login" />} />
+    <Route path="/statistics" element={<Navigate to="/login" />} />
+    <Route path="/accounts" element={<Navigate to="/login" />} />
+    <Route path="/more" element={<Navigate to="/login" />} />
   </>
 )
 
