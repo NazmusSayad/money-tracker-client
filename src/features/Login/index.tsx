@@ -3,7 +3,7 @@ import LoginForm from './LoginForm'
 import { useApi } from '@/http'
 
 export default function index() {
-  const api = useApi()
+  const api = useApi({ suspense: true })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
