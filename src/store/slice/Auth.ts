@@ -10,7 +10,9 @@ export default createSlice('auth', {
     jwt(state, payload: string | null) {
       state.jwt = payload
       state.isLoggedIn = !!payload
-      cookies.set('isLoggedIn', !!payload)
+      cookies.set('isLoggedIn', !!payload, {
+        maxAge: 86400000 * 30, // 1 day in milliseconds * 30 = 30 days
+      })
     },
   },
 })
