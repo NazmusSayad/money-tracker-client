@@ -50,7 +50,10 @@ export default function Sidebar(props: Props) {
                       />
                     }
 
-                    <Text style={linkStyles}>
+                    <Text
+                      style={linkStyles}
+                      variant={props.isTablet ? 'labelSmall' : 'labelMedium'}
+                    >
                       {props.isTablet ? link.shortLabel : link.longLabel}
                     </Text>
                   </View>
