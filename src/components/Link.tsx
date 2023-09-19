@@ -22,7 +22,7 @@ injectCSS(`
     opacity: 0.95;
   }
   
-  .${className}:focus {
+  .${className}:focus-visible {
     outline-width: 2px;
     outline-style: dashed;
     outline-color: gray;
