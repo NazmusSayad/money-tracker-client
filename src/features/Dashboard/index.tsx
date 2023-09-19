@@ -7,8 +7,6 @@ export default function index() {
   const isMobile = useMediaQuery({ maxWidth: 500 / 16 + 'em' })
   const isTablet = useMediaQuery({ maxWidth: 800 / 16 + 'em' })
 
-  console.log(isMobile, isTablet)
-
   return (
     <View
       style={$style(

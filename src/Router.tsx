@@ -9,6 +9,7 @@ import Dashboard from '@/features/Dashboard'
 import Transaction from '@/features/Transaction'
 import Statistics from '@/features/Statistics'
 import Accounts from '@/features/Accounts'
+import Profile from '@/features/Profile'
 import NavigationMore from '@/features/NavigationMore'
 
 export default function Router() {
@@ -42,6 +43,7 @@ const publicRoutes = (
     <Route path="/transaction" element={<Navigate to="/login" />} />
     <Route path="/statistics" element={<Navigate to="/login" />} />
     <Route path="/accounts" element={<Navigate to="/login" />} />
+    <Route path="/profile" element={<Navigate to="/login" />} />
     <Route path="/more" element={<Navigate to="/login" />} />
   </>
 )
@@ -53,6 +55,7 @@ const privateRoutes = (
       <Route path="/transaction" element={<Transaction />} />
       <Route path="/statistics" element={<Statistics />} />
       <Route path="/accounts" element={<Accounts />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/more" element={<NavigationMore />} />
     </Route>
 

@@ -80,7 +80,8 @@ export function Link({ render, forceRender, ...props }: LinkProps) {
     <LinkNative
       {...props}
       children={children}
-      style={{}}
+      underlayColor={'transparent'}
+      style={{ opacity: isDown ? 0.5 : 1 }}
       onPressIn={() => setIsDown(true)}
       onPressOut={() => setIsDown(false)}
       onFocus={() => setIsFocus(true)}

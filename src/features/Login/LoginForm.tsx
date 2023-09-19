@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, Text, TextInput, useTheme } from 'react-native-paper'
 import Wrapper from '@/layouts/Wrapper'
@@ -11,7 +12,7 @@ export default function LoginForm({
   error,
 }) {
   const { colors } = useTheme()
-  console.log()
+  const [hidePassword, setHidePassword] = useState(true)
 
   return (
     <View style={styles.container}>
@@ -23,6 +24,9 @@ export default function LoginForm({
             textContentType="emailAddress"
             theme={{ roundness: 10 }}
             value={email}
+            autoComplete="email"
+            autoCorrect={false}
+            autoFocus={true}
             onChangeText={(value) => setEmail(value)}
           />
 
@@ -33,6 +37,15 @@ export default function LoginForm({
             theme={{ roundness: 10 }}
             value={password}
             onChangeText={(value) => setPassword(value)}
+            secureTextEntry={hidePassword}
+            autoComplete="password"
+            autoCorrect={false}
+            right={
+              <TextInput.Icon
+                icon={hidePassword ? 'eye' : 'eye-off'}
+                onPress={() => setHidePassword((prev) => !prev)}
+              />
+            }
           />
 
           <Button

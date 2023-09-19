@@ -4,12 +4,13 @@ import { Provider } from 'react-redux'
 import { Platform, View } from 'react-native'
 import { BrowserRouter } from 'react-router-dom'
 import { NativeRouter } from 'react-router-native'
+import { PaperProvider, Text } from 'react-native-paper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { PaperProvider, Text, MD3DarkTheme } from 'react-native-paper'
 
 import os from '@/os'
 import Main from '@/Main'
 import { store } from '@/store'
+import { paperTheme } from '@/colors'
 
 const Router = os.isWeb ? BrowserRouter : NativeRouter
 export default function App() {
@@ -31,7 +32,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <PaperProvider theme={{ ...MD3DarkTheme, roundness: 2.5 }}>
+      <PaperProvider theme={paperTheme}>
         <SafeAreaProvider>
           <Router>
             <Main />

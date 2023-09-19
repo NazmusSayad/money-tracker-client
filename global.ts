@@ -1,28 +1,20 @@
 import os from '@/os'
-import colors from '@/colors'
 import style from '@/utils/style'
+import { setGlobal } from '@/utils'
+import { paperTheme } from '@/colors'
 import { useStore, actions } from '@/store'
-
-try {
-  window.$style = style
-  window.$useStore = useStore
-  window.$actions = actions
-  window.$clr = colors
-} catch {
-  try {
-    globalThis.$style = style
-    globalThis.$useStore = useStore
-    globalThis.$actions = actions
-    globalThis.$clr = colors
-  } catch {}
-}
 
 declare global {
   var $style: typeof style
   var $useStore: typeof useStore
   var $actions: typeof actions
-  var $clr: typeof colors
+  var $clr: typeof paperTheme.colors
 }
+
+setGlobal('$style', style)
+setGlobal('$useStore', useStore)
+setGlobal('$actions', actions)
+setGlobal('$clr', paperTheme.colors)
 
 if (os.isWeb) {
   document.body.style.userSelect = 'none'

@@ -1,8 +1,7 @@
 import { AntDesign } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { Entypo } from '@expo/vector-icons'
-import { Feather } from '@expo/vector-icons'
-
+ 
 type Link = {
   Icon: any
   iconProps?: object
@@ -33,8 +32,8 @@ const links: Link[] = [
     longLabel: 'Statistics',
   },
   {
-    Icon: Feather,
-    iconProps: { name: 'database' },
+    Icon: AntDesign,
+    iconProps: { name: 'wallet' },
 
     to: '/accounts',
     main: true,

@@ -1,7 +1,7 @@
+import { Avatar, Text } from 'react-native-paper'
 import { View, StyleSheet } from 'react-native'
-import links from './links'
-import { Text } from 'react-native-paper'
 import { Link } from '@/components/Link'
+import links from './links'
 
 type Props = {
   isMobile: boolean
@@ -10,7 +10,12 @@ type Props = {
 
 export default function Sidebar(props: Props) {
   return (
-    <View style={styles.container}>
+    <View
+      style={$style(
+        styles.container,
+        props.isMobile || styles.containerUpperThanMobile
+      )}
+    >
       <View
         style={$style(
           styles.listContainer,
@@ -31,9 +36,9 @@ export default function Sidebar(props: Props) {
                 return (
                   <View
                     style={$style(
-                      styles.ItemContent,
-                      props.isMobile && styles.ItemContentMobile,
-                      props.isTablet && styles.ItemContentTablet
+                      styles.linkContent,
+                      props.isMobile && styles.linkContentMobile,
+                      props.isTablet && styles.linkContentTablet
                     )}
                   >
                     {
@@ -55,6 +60,22 @@ export default function Sidebar(props: Props) {
           </View>
         ))}
       </View>
+
+      {props.isMobile || (
+        <View style={styles.bottomListContainer}>
+          <View style={{ width: 40, height: 40 }}>
+            <Link
+              to="/profile"
+              render={() => (
+                <Avatar.Image
+                  size={40}
+                  source={{ uri: 'https://picsum.photos/200' }}
+                />
+              )}
+            />
+          </View>
+        </View>
+      )}
     </View>
   )
 }
@@ -62,6 +83,12 @@ export default function Sidebar(props: Props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: $clr.bgLighter,
+    justifyContent: 'space-between',
+  },
+
+  containerUpperThanMobile: {
+    paddingTop: 5,
+    paddingBottom: 12,
   },
 
   listContainer: {},
@@ -72,36 +99,40 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
   },
 
+  bottomListContainer: {
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+
   linkContainer: {
     borderRadius: 10,
     overflow: 'hidden',
   },
 
-  ItemContent: {
+  link: {
+    color: $clr.bgWhitest,
+  },
+
+  linkActive: {
+    color: $clr.secondary,
+  },
+
+  linkContent: {
     flexDirection: 'row',
     width: '100%',
     paddingVertical: 10,
     paddingHorizontal: 15,
-
     alignItems: 'center',
     gap: 7.5,
   },
 
-  ItemContentTablet: {
+  linkContentTablet: {
     gap: 0,
     padding: 7.5,
     flexDirection: 'column',
   },
 
-  ItemContentMobile: {
+  linkContentMobile: {
     minWidth: 50,
-  },
-
-  link: {
-    color: 'red',
-  },
-
-  linkActive: {
-    color: 'blue',
   },
 })

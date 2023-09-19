@@ -7,7 +7,8 @@
     "serve": "npx serve web-build --single",
     "android": "expo run:android",
     "build:w": "expo export:web",
-    "build:a": "eas build --platform android"
+    "build:a": "eas build --platform android",
+    "tsc": "tsc --noEmit -w"
   },
   "dependencies": {
     "@expo/match-media": "^0.4.0",
@@ -15,7 +16,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
     "expo": "~49.0.11",
-    "expo-screen-orientation": "^6.2.0",
+    "expo-screen-orientation": "~6.0.5",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "get-classnames": "^2.0.0",
