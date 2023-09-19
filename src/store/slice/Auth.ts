@@ -1,21 +1,21 @@
-import cookies from '@/cookies'
+import storage from '@/utils/storage'
 import { createSlice } from 'react-rtk'
 
 export default createSlice('auth', {
   initialState: {
     jwt: null as string | null,
-    isLoggedIn: Boolean(cookies.get('isLoggedIn')),
+    isLoggedIn: null as boolean | null,
   },
 
   reducers: {
+    setIsLoggedIn(state, payload: boolean) {
+      state.isLoggedIn = payload
+      storage.set('isLoggedIn', payload)
+    },
+
     jwt(state, payload: string | null) {
       state.jwt = payload
-      state.isLoggedIn = !!payload
-
-      cookies.set('isLoggedIn', !!payload, {
-        maxAge: 86400000 * 30, // 1 day in milliseconds * 30 = 30 days,
-        secure: true,
-      })
+      this.setIsLoggedIn(state, !!payload)
     },
   },
 })

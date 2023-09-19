@@ -3,13 +3,16 @@ import { Button } from 'react-native'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { useApi } from './http'
-import LandingPage from '@/features/LandingPage'
+import storage from './utils/storage'
+import Loading from './components/Loading'
+
 import Login from '@/features/Login'
-import Dashboard from '@/features/Dashboard'
-import Transaction from '@/features/Transaction'
-import Statistics from '@/features/Statistics'
-import Accounts from '@/features/Accounts'
 import Profile from '@/features/Profile'
+import Accounts from '@/features/Accounts'
+import Dashboard from '@/features/Dashboard'
+import Statistics from '@/features/Statistics'
+import Transaction from '@/features/Transaction'
+import LandingPage from '@/features/LandingPage'
 import NavigationMore from '@/features/NavigationMore'
 
 export default function Router() {
@@ -17,18 +20,26 @@ export default function Router() {
   const isLoggedIn = $useStore((state) => state.auth.isLoggedIn)
 
   useEffect(() => {
-    if (!isLoggedIn) return
-    ;(async () => {
-      const { data } = await api.get<[{ jwt_token: string }]>('/auth/token')
-      console.log('JWT_TOKEN updated!')
-      $actions.auth.jwt(data?.jwt_token)
-    })()
-  }, [])
+    if (isLoggedIn == null) {
+      ;(async () => {
+        const isLoggedIn = await storage.get('isLoggedIn')
+        $actions.auth.setIsLoggedIn(isLoggedIn)
+      })()
+    } else if (isLoggedIn === false) return
+    else {
+      ;(async () => {
+        const { data } = await api.get<[{ jwt_token: string }]>('/auth/token')
+        console.log('JWT_TOKEN updated!')
+        $actions.auth.jwt(data?.jwt_token)
+      })()
+    }
+  }, [isLoggedIn])
+
+  if (isLoggedIn == null) return <Loading />
 
   return (
     <Routes>
       {isLoggedIn ? privateRoutes : publicRoutes}
-      {/* {privateRoutes} */}
       <Route path="/about" element={<Button title="About" />} />
     </Routes>
   )

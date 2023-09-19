@@ -1,10 +1,11 @@
 import { Suspense } from 'react'
+import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
 import Router from './Router'
+import { setGlobal } from './utils'
 import Loading from '@/components/Loading'
 import { backgroundColor } from '../app.config'
-import { useTheme } from 'react-native-paper'
-import { setGlobal } from './utils'
 
 export default function Main() {
   const theme = useTheme()
