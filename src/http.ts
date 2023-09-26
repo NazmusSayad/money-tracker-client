@@ -4,5 +4,5 @@ const reactApi = ReactApi({
   baseURL: 'https://money-tracker-oiw9.onrender.com/',
 })
 
-export default reactApi
+export default reactApi.axiosInstance
 export const { useApiOnce, useApi, useDataApi, createSuspense } = reactApi.hooks

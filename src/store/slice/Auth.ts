@@ -1,3 +1,4 @@
+import axiosInstance from '@/http'
 import storage from '@/utils/storage'
 import { createSlice } from 'react-rtk'
 
@@ -15,6 +16,7 @@ export default createSlice('auth', {
 
     jwt(state, payload: string | null) {
       state.jwt = payload
+      axiosInstance.defaults.headers.common.authorization = payload
       this.setIsLoggedIn(state, !!payload)
     },
   },

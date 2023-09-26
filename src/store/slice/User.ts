@@ -1,6 +1,6 @@
 import { createSlice } from 'react-rtk'
 
-export default createSlice('main', {
+export default createSlice('user', {
   initialState: {
     message: 'Hello world!',
   },

@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useApi } from './http'
 import storage from './utils/storage'
 import Loading from './components/Loading'
+import * as effect from './Effect'
 
 import Login from '@/features/Login'
 import Profile from '@/features/Profile'
@@ -16,32 +17,27 @@ import LandingPage from '@/features/LandingPage'
 import NavigationMore from '@/features/NavigationMore'
 
 export default function Router() {
-  const api = useApi()
   const isLoggedIn = $useStore((state) => state.auth.isLoggedIn)
 
   useEffect(() => {
-    if (isLoggedIn == null) {
-      ;(async () => {
-        const isLoggedIn = await storage.get('isLoggedIn')
-        $actions.auth.setIsLoggedIn(isLoggedIn || false)
-      })()
-    } else if (isLoggedIn === false) return
-    else {
-      ;(async () => {
-        const { data } = await api.get<[{ jwt_token: string }]>('/auth/token')
-        console.log('JWT_TOKEN updated!')
-        $actions.auth.jwt(data?.jwt_token)
-      })()
-    }
+    if (isLoggedIn != null) return
+    ;(async () => {
+      const isLoggedIn = await storage.get('isLoggedIn')
+      $actions.auth.setIsLoggedIn(isLoggedIn || false)
+    })()
   }, [isLoggedIn])
 
   if (isLoggedIn == null) return <Loading />
-
   return (
-    <Routes>
-      {isLoggedIn ? privateRoutes : publicRoutes}
-      <Route path="/about" element={<Button title="About" />} />
-    </Routes>
+    <>
+      {<effect.CommonEffect />}
+      {isLoggedIn ? <effect.PrivateEffect /> : <effect.PublicEffect />}
+
+      <Routes>
+        {isLoggedIn ? privateRoutes : publicRoutes}
+        <Route path="/about" element={<Button title="About" />} />
+      </Routes>
+    </>
   )
 }
 
