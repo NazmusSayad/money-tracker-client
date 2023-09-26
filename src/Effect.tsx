@@ -2,9 +2,6 @@ import { useEffect } from 'react'
 import { useApi } from './http'
 
 export function CommonEffect() {
-  const transactions = $useStore((state) => state.categories)
-  console.log('transactions', transactions)
-
   return <></>
 }
 
@@ -26,7 +23,7 @@ export function PrivateEffect() {
       $actions.main.startFetchingUserData()
 
       Fetch_Transactions: {
-        const { data, ok } = await api.get(`/transaction`)
+        const { data, ok } = await api.get(`/transactions`)
         $actions.transactions.setTransactions(data.transactions)
       }
 
@@ -36,7 +33,7 @@ export function PrivateEffect() {
       }
 
       Fetch_Categories: {
-        const { data, ok } = await api.get(`/category`)
+        const { data, ok } = await api.get(`/categories`)
         $actions.categories.setCategories(data.categories)
       }
 
