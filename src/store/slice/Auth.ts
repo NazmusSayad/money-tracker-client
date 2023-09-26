@@ -5,13 +5,13 @@ import { createSlice } from 'react-rtk'
 export default createSlice('auth', {
   initialState: {
     jwt: null as string | null,
-    isLoggedIn: null as boolean | null,
+    isLoggedIn: null as unknown as boolean,
   },
 
   reducers: {
     setIsLoggedIn(state, payload: boolean) {
       state.isLoggedIn = payload
-      storage.set('isLoggedIn', payload)
+      storage.set('isLoggedIn', payload || null)
     },
 
     jwt(state, payload: string | null) {

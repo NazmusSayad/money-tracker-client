@@ -15,6 +15,10 @@ export default createSlice('categories', {
     },
   },
   reducers: {
+    init(state, categories: InitialState) {
+      return categories
+    },
+
     addCategories(state, categories: unknown[]) {
       categories.forEach((category: any) => {
         if (category.type === 'income') {

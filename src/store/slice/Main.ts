@@ -2,14 +2,21 @@ import { createSlice } from 'react-rtk'
 
 export default createSlice('main', {
   initialState: {
-    isFetchingUserData: false,
+    isStoreSynced: false,
+    dataFetchedFromServer: false,
+    hasStoredData: false,
   },
   reducers: {
-    startFetchingUserData(state) {
-      state.isFetchingUserData = true
+    finishStoreSync(state) {
+      state.isStoreSynced = true
     },
-    finishFetchingUserData(state) {
-      state.isFetchingUserData = false
+
+    setHasStoredData(state, payload: boolean) {
+      state.hasStoredData = payload
+    },
+
+    finishFetchingFromServer(state) {
+      state.dataFetchedFromServer = true
     },
   },
 })

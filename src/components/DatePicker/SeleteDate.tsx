@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
-import DatePicker from '@/components/DatePicker'
 
-export default function index(props) {
+export default function SeleteDate({ type }: { type: 'Yearly' | 'Monthly' }) {
   return (
     <View style={styles.container}>
-      <DatePicker />
+      <Text>SeleteDate</Text>
     </View>
   )
 }

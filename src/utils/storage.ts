@@ -12,10 +12,8 @@ class Storage {
     else AsyncStorage.removeItem(key)
   }
 
-  #setRawValue = async (key: string, value: string) => {
-    if (value == null) return this.#clearRawValue(key)
-    if (os.isWeb) return localStorage.setItem(key, value)
-    return AsyncStorage.setItem(key, value)
+  delete(key: string) {
+    return this.#clearRawValue(key)
   }
 
   async get(key: string) {
@@ -24,8 +22,11 @@ class Storage {
   }
 
   async set(key: string, value: any) {
+    if (value == null) return this.#clearRawValue(key)
+
     const rawValue = JSON.stringify(value)
-    return this.#setRawValue(key, rawValue)
+    if (os.isWeb) return localStorage.setItem(key, rawValue)
+    return AsyncStorage.setItem(key, rawValue)
   }
 }
 

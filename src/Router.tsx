@@ -1,11 +1,8 @@
-import { useEffect } from 'react'
 import { Button } from 'react-native'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { useApi } from './http'
-import storage from './utils/storage'
-import Loading from './components/Loading'
 import * as effect from './Effect'
+import Loading from './components/Loading'
 
 import Login from '@/features/Login'
 import Profile from '@/features/Profile'
@@ -18,28 +15,45 @@ import NavigationMore from '@/features/NavigationMore'
 
 export default function Router() {
   const isLoggedIn = $useStore((state) => state.auth.isLoggedIn)
+  const isStoreSynced = $useStore((state) => state.main.isStoreSynced)
 
-  useEffect(() => {
-    if (isLoggedIn != null) return
-    ;(async () => {
-      const isLoggedIn = await storage.get('isLoggedIn')
-      $actions.auth.setIsLoggedIn(isLoggedIn || false)
-    })()
-  }, [isLoggedIn])
+  const hasStoredData = $useStore((state) => state.main.hasStoredData)
+  const dataFetchedFromServer = $useStore(
+    (state) => state.main.dataFetchedFromServer
+  )
 
-  if (isLoggedIn == null) return <Loading />
+  if (!isStoreSynced) {
+    return (
+      <>
+        <effect.InitStoreFromStorage />
+        <Loading />
+      </>
+    )
+  }
+
   return (
     <>
       {<effect.CommonEffect />}
       {isLoggedIn ? <effect.PrivateEffect /> : <effect.PublicEffect />}
 
-      <Routes>
-        {isLoggedIn ? privateRoutes : publicRoutes}
-        <Route path="/about" element={<Button title="About" />} />
-      </Routes>
+      {(isLoggedIn && (hasStoredData || dataFetchedFromServer)) ||
+      !isLoggedIn ? (
+        <Routes>
+          {isLoggedIn ? privateRoutes : publicRoutes}
+          {commonRoutes}
+        </Routes>
+      ) : (
+        <Loading />
+      )}
     </>
   )
 }
+
+const commonRoutes = (
+  <>
+    <Route path="/about" element={<Button title="About" />} />
+  </>
+)
 
 const publicRoutes = (
   <>

@@ -7,6 +7,10 @@ type InitialState = {
 export default createSlice('accounts', {
   initialState: { accounts: {} as InitialState },
   reducers: {
+    init(state, accounts: InitialState) {
+      return accounts
+    },
+
     addAccounts(state, accounts: unknown[]) {
       accounts.forEach((account: any) => {
         state.accounts[account._id] = account

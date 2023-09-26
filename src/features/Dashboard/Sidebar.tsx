@@ -9,6 +9,8 @@ type Props = {
 }
 
 export default function Sidebar(props: Props) {
+  const avatar = $useStore((store) => store.user.user.avatar)
+
   return (
     <View
       style={$style(
@@ -72,7 +74,7 @@ export default function Sidebar(props: Props) {
               render={() => (
                 <Avatar.Image
                   size={40}
-                  source={{ uri: 'https://picsum.photos/200' }}
+                  source={{ uri: avatar || 'https://picsum.photos/200' }}
                 />
               )}
             />

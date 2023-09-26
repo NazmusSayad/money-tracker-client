@@ -2,11 +2,15 @@ import { createSlice } from 'react-rtk'
 
 export default createSlice('user', {
   initialState: {
-    message: 'Hello world!',
+    user: {} as any,
   },
   reducers: {
-    updateMessage(state, payload) {
-      state.message = payload
+    init(state, user) {
+      return user
+    },
+
+    setUser(state, user) {
+      state.user = user
     },
   },
 })

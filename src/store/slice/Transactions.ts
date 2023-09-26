@@ -12,6 +12,10 @@ type InitialState = {
 export default createSlice('transactions', {
   initialState: { transactions: {} as InitialState },
   reducers: {
+    init(state, transactions: InitialState) {
+      return transactions
+    },
+
     addTransactions(state, transactions: unknown[]) {
       transactions.forEach((transaction: any) => {
         const { year, month, date } = transaction.date.match(matchRegex).groups
