@@ -19,7 +19,7 @@ export function PublicEffect() {
 export function InitStoreFromStorage() {
   useAsyncEffect(async () => {
     const isLoggedIn = await storage.get('isLoggedIn')
-    $actions.auth.setIsLoggedIn(isLoggedIn === 'true')
+    $actions.auth.setIsLoggedIn(isLoggedIn || false)
 
     if (!isLoggedIn) return $actions.main.finishStoreSync()
 
