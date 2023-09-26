@@ -23,7 +23,7 @@ export default function Router() {
     if (isLoggedIn == null) {
       ;(async () => {
         const isLoggedIn = await storage.get('isLoggedIn')
-        $actions.auth.setIsLoggedIn(isLoggedIn)
+        $actions.auth.setIsLoggedIn(isLoggedIn || false)
       })()
     } else if (isLoggedIn === false) return
     else {
