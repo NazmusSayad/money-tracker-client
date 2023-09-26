@@ -21,7 +21,7 @@ export function InitStoreFromStorage() {
     const isLoggedIn = await storage.get('isLoggedIn')
     $actions.auth.setIsLoggedIn(isLoggedIn || false)
 
-    if (!isLoggedIn) return $actions.main.finishStoreSync()
+    if (!isLoggedIn || os.isWeb) return $actions.main.finishStoreSync()
 
     const user = await storage.get('user')
     const accounts = await storage.get('accounts')
