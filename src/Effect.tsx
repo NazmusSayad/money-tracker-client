@@ -27,17 +27,17 @@ export function PrivateEffect() {
 
       Fetch_Transactions: {
         const { data, ok } = await api.get(`/transaction`)
-        $actions.transactions.addTransactions(data.transactions)
+        $actions.transactions.setTransactions(data.transactions)
       }
 
       Fetch_Accounts: {
         const { data, ok } = await api.get(`/accounts`)
-        $actions.accounts.addTransactions(data.accounts)
+        $actions.accounts.setAccounts(data.accounts)
       }
 
       Fetch_Categories: {
         const { data, ok } = await api.get(`/category`)
-        $actions.categories.addCategories(data.categories)
+        $actions.categories.setCategories(data.categories)
       }
 
       $actions.main.finishFetchingUserData()

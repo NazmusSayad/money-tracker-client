@@ -24,5 +24,11 @@ export default createSlice('categories', {
         }
       })
     },
+
+    setCategories(state, categories: unknown[]) {
+      state.income = {}
+      state.expense = {}
+      this.addCategories(state, categories)
+    },
   },
 })

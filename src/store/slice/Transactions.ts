@@ -26,5 +26,10 @@ export default createSlice('transactions', {
         })
       })
     },
+
+    setTransactions(state, transactions: unknown[]) {
+      state.transactions = {}
+      this.addTransactions(state, transactions)
+    },
   },
 })
