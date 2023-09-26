@@ -8,6 +8,40 @@ export function CommonEffect() {
   return <></>
 }
 
+export function PublicEffect() {
+  useEffect(() => {
+    storage.clear()
+  }, [])
+
+  return <></>
+}
+
+export function InitStoreFromStorage() {
+  useAsyncEffect(async () => {
+    const isLoggedIn = await storage.get('isLoggedIn')
+    $actions.auth.setIsLoggedIn(isLoggedIn === 'true')
+
+    if (!isLoggedIn) return $actions.main.finishStoreSync()
+
+    const user = await storage.get('user')
+    const accounts = await storage.get('accounts')
+    const categories = await storage.get('categories')
+    const transactions = await storage.get('transactions')
+
+    user && $actions.user.init(user)
+    accounts && $actions.accounts.init(accounts)
+    categories && $actions.categories.init(categories)
+    transactions && $actions.transactions.init(transactions)
+
+    $actions.main.finishStoreSync()
+    $actions.main.setHasStoredData(
+      Boolean(user && accounts && categories && transactions)
+    )
+  })
+
+  return <></>
+}
+
 export function PrivateEffect() {
   const api = useApi()
   const jwt = $useStore((state) => state.auth.jwt)
@@ -55,48 +89,6 @@ export function PrivateEffect() {
     storage.set('categories', categories)
     storage.set('transactions', transactions)
   }, [user, accounts, categories, transactions])
-
-  return <></>
-}
-
-export function PublicEffect() {
-  useEffect(() => {
-    if (os.isWeb) return
-    storage.delete('user')
-    storage.delete('accounts')
-    storage.delete('categories')
-    storage.delete('transactions')
-  }, [])
-
-  return <></>
-}
-
-export function InitStoreFromStorage() {
-  useAsyncEffect(async () => {
-    // SyncLoggedInStatus
-    const isLoggedIn = await storage.get('isLoggedIn')
-    $actions.auth.setIsLoggedIn(isLoggedIn || false)
-
-    if (!isLoggedIn) return $actions.main.finishStoreSync()
-    // SyncUserData
-
-    const user = await storage.get('user')
-    const accounts = await storage.get('accounts')
-    const categories = await storage.get('categories')
-    const transactions = await storage.get('transactions')
-
-    $actions.main.setHasStoredData(
-      Boolean(user && accounts && categories && transactions)
-    )
-
-    user && $actions.user.init(user)
-    accounts && $actions.accounts.init(accounts)
-    categories && $actions.categories.init(categories)
-    transactions && $actions.transactions.init(transactions)
-
-    // Finish
-    $actions.main.finishStoreSync()
-  })
 
   return <></>
 }

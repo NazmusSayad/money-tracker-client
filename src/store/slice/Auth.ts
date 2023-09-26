@@ -5,7 +5,7 @@ import { createSlice } from 'react-rtk'
 export default createSlice('auth', {
   initialState: {
     jwt: null as string | null,
-    isLoggedIn: null as unknown as boolean,
+    isLoggedIn: null as never as boolean,
   },
 
   reducers: {
