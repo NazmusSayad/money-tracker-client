@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { Card, Divider, Text } from 'react-native-paper'
 import DatePicker from '@/components/DatePicker'
 
 export default function index() {
@@ -50,6 +51,12 @@ export default function index() {
         setYear={setYear}
         setMonth={setMonth}
       />
+
+      <Card style={{ margin: 10 }}>
+        <Text>
+          aksdjfkasdjfk asdkfkasdjfasjdfkasdjf kasdjkf adjskfsadkf sdkf{' '}
+        </Text>
+      </Card>
     </View>
   )
 }

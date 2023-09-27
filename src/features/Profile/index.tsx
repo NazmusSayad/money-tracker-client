@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { Text } from 'react-native-paper'
 
 export default function index() {
+  const user = $useStore((state) => state.user.user)
+
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
+      <Text>{user.name}</Text>
     </View>
   )
 }
