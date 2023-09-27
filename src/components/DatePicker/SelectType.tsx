@@ -1,36 +1,29 @@
-import { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Button, Menu } from 'react-native-paper'
+import { StyleSheet } from 'react-native'
+import { SegmentedButtons } from 'react-native-paper'
 
-export default function index({ selected, setSelected }) {
-  const [visible, setVisible] = useState(false)
-  const openMenu = () => setVisible(true)
-  const closeMenu = () => setVisible(false)
-
+export default function SelectType({ type, setType }) {
   return (
-    <View style={styles.container}>
-      <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={<Button onPress={openMenu}>{selected}</Button>}
-      >
-        <Menu.Item
-          onPress={() => (setSelected('Monthly'), closeMenu())}
-          title="Monthly"
-        />
-        <Menu.Item
-          onPress={() => (setSelected('Yearly'), closeMenu())}
-          title="Yearly"
-        />
-      </Menu>
-    </View>
+    <SegmentedButtons
+      style={styles.container}
+      value={type}
+      multiSelect={false}
+      onValueChange={(value: any) => setType(value)}
+      buttons={[
+        {
+          value: 'Monthly',
+          label: 'Monthly',
+          showSelectedCheck: true,
+        },
+        {
+          value: 'Yearly',
+          label: 'Yearly',
+          showSelectedCheck: true,
+        },
+      ]}
+    />
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderColor: $clr.bgWhiter,
-    borderWidth: 1.5,
-    borderRadius: 5,
-  },
+  container: { width: '100%' },
 })

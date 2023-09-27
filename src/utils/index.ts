@@ -8,3 +8,20 @@ export function setGlobal(key: string, value: any) {
     } catch {}
   }
 }
+
+export function getMonthName(index: number) {
+  return [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ][index]
+}
