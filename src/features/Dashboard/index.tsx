@@ -1,5 +1,6 @@
 import { View, StyleSheet } from 'react-native'
 import { useMediaQuery } from 'react-responsive'
+import { FAB } from 'react-native-paper'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 
@@ -18,6 +19,12 @@ export default function index() {
       {isMobile || <Sidebar isMobile={isMobile} isTablet={isTablet} />}
       <View style={styles.main}>
         <Outlet />
+
+        <FAB
+          icon="plus"
+          style={$style(styles.fab)}
+          onPress={() => console.log('Create trans')}
+        />
       </View>
       {isMobile && <Sidebar isMobile={isMobile} isTablet={isTablet} />}
     </View>
@@ -38,5 +45,12 @@ const styles = StyleSheet.create({
 
   main: {
     flex: 1,
+  },
+
+  fab: {
+    position: 'absolute',
+    margin: 15,
+    right: 0,
+    bottom: 0,
   },
 })

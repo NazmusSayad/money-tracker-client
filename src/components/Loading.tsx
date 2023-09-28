@@ -1,4 +1,3 @@
-import { Text, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 
 export default function Loading() {

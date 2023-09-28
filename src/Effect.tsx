@@ -11,6 +11,7 @@ export function CommonEffect() {
 export function PublicEffect() {
   useEffect(() => {
     storage.clear()
+    $actions.transactions.reset()
   }, [])
 
   return <></>
@@ -83,7 +84,7 @@ export function PrivateEffect() {
   }, [Boolean(jwt)])
 
   useEffect(() => {
-    if (os.isWeb) return
+    // if (os.isWeb) return
     storage.set('user', user)
     storage.set('accounts', accounts)
     storage.set('categories', categories)

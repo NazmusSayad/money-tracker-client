@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, IconButton, Divider } from 'react-native-paper'
 
@@ -43,15 +43,15 @@ export default function index({
             style={{ margin: 0 }}
           />
 
+          <Text>
+            {year} {type === 'Monthly' ? getMonthName(month) : ''}
+          </Text>
+
           <IconButton
             onPress={() => handleLeftClick(+1)}
             icon="chevron-right"
             style={{ margin: 0 }}
           />
-
-          <Text>
-            {year} {type === 'Monthly' ? getMonthName(month) : ''}
-          </Text>
         </View>
 
         <IconButton onPress={() => setShowModal(true)} icon="filter-variant" />

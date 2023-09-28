@@ -5,8 +5,8 @@ export default createSlice('user', {
     user: {} as any,
   },
   reducers: {
-    init(state, user) {
-      return user
+    init(state, data) {
+      return { ...state, ...data }
     },
 
     setUser(state, user) {

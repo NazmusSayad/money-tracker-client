@@ -7,8 +7,8 @@ type InitialState = {
 export default createSlice('accounts', {
   initialState: { accounts: {} as InitialState },
   reducers: {
-    init(state, accounts: InitialState) {
-      return accounts
+    init(state, data: InitialState) {
+      return { ...state, ...data }
     },
 
     addAccounts(state, accounts: unknown[]) {

@@ -15,8 +15,8 @@ export default createSlice('categories', {
     },
   },
   reducers: {
-    init(state, categories: InitialState) {
-      return categories
+    init(state, data: InitialState) {
+      return { ...state, ...data }
     },
 
     addCategories(state, categories: unknown[]) {

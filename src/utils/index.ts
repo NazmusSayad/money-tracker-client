@@ -25,3 +25,17 @@ export function getMonthName(index: number) {
     'December',
   ][index]
 }
+
+export function flattenObject(obj) {
+  let result: any[] = []
+
+  for (const key in obj) {
+    if (Array.isArray(obj[key])) {
+      result = result.concat(obj[key])
+    } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+      result = result.concat(flattenObject(obj[key]))
+    }
+  }
+
+  return result
+}

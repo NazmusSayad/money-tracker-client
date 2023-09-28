@@ -1,45 +1,18 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Divider, Text } from 'react-native-paper'
+import { Divider, Text } from 'react-native-paper'
 import DatePicker from '@/components/DatePicker'
+import HeaderStatus from './HeaderStatus'
+import { useTransactions } from '@/store/slice/Transactions'
 
 export default function index() {
   const [month, setMonth] = useState(new Date().getMonth())
   const [year, setYear] = useState(new Date().getFullYear())
   const [type, setType] = useState<'Monthly' | 'Yearly'>('Monthly')
-
-  const transactions = $useStore((state) => state.transactions.transactions)
-  const localTransactions = $useStore(
-    (state) => state.transactions.localTransactions
+  const transactions = useTransactions(
+    year,
+    type === 'Monthly' ? month : undefined
   )
-
-  const allTrans = useMemo(() => {
-    if (type === 'Monthly') {
-      const abc = transactions?.[year]?.[month] ?? {}
-      const xyz = localTransactions?.[year]?.[month] ?? {}
-
-      const result = JSON.parse(JSON.stringify(abc))
-      for (let key in xyz) {
-        const value = xyz[key] ?? []
-        result[key]?.push(...value)
-      }
-
-      const entries = Object.entries(result).sort(([a]: any, [b]: any) => a - b)
-      return entries
-    }
-
-    const abc = transactions?.[year] ?? {}
-    const xyz = localTransactions?.[year] ?? {}
-
-    const result = JSON.parse(JSON.stringify(abc))
-    for (let key in xyz) {
-      const value = xyz[key] ?? {}
-      result[key] = { ...result[key], ...value }
-    }
-
-    const entries = Object.entries(result).sort(([a]: any, [b]: any) => a - b)
-    return entries
-  }, [transactions, localTransactions, month, year, type])
 
   return (
     <View style={styles.container}>
@@ -51,12 +24,9 @@ export default function index() {
         setYear={setYear}
         setMonth={setMonth}
       />
-
-      <Card style={{ margin: 10 }}>
-        <Text>
-          aksdjfkasdjfk asdkfkasdjfasjdfkasdjf kasdjkf adjskfsadkf sdkf{' '}
-        </Text>
-      </Card>
+      <Divider />
+      <HeaderStatus transactions={transactions} year={year} month={month} />
+      <Divider />
     </View>
   )
 }

@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function Sidebar(props: Props) {
-  const avatar = $useStore((store) => store.user.user.avatar)
+  const avatar = $useStore((store) => store.user.user?.avatar)
 
   return (
     <View

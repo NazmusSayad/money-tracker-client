@@ -6,7 +6,7 @@ export default function index() {
 
   return (
     <View style={styles.container}>
-      <Text>{user.name}</Text>
+      <Text>{user?.name}</Text>
     </View>
   )
 }
