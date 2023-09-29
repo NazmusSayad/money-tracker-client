@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTransactions } from '@/store/slice/Transactions'
 import { flattenObject } from '@/utils'
 
-const restorePrev: boolean = true
+const restorePrev: boolean = false
 
 export default function useTotalBalance(
   transactions,
@@ -33,7 +33,7 @@ export default function useTotalBalance(
         }
       }
     } else {
-      final = allTrans
+      final = transactions
     }
 
     const flatted = flattenObject(final)
@@ -48,7 +48,7 @@ export default function useTotalBalance(
     })
 
     return balance
-  }, [allTrans, restorePrev, selectedMonth, selectedYear])
+  }, [restorePrev ? allTrans : transactions, selectedMonth, selectedYear])
 
   const balance = useMemo(() => {
     const flatted = flattenObject(transactions)

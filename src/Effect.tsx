@@ -84,6 +84,7 @@ export function PrivateEffect() {
   }, [Boolean(jwt)])
 
   useEffect(() => {
+    return
     if (os.isWeb) return
     storage.set('user', user)
     storage.set('accounts', accounts)
