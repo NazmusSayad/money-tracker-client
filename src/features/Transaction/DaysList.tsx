@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import { Divider, Text } from 'react-native-paper'
 import { Transaction } from '@/store/slice/Transactions'
 import DayItem from './DayItem'
@@ -11,9 +11,11 @@ type Props = {
 }
 
 export default function DaysList({ transactions }: Props) {
-  return Object.entries(transactions).map(([date, transactions]) => (
-    <DaysSection key={date} date={+date} transactions={transactions} />
-  ))
+  return Object.entries(transactions)
+    .sort(([a], [b]) => +b - +a)
+    .map(([date, transactions]) => (
+      <DaysSection key={date} date={+date} transactions={transactions} />
+    ))
 }
 
 type SectionProps = {
@@ -52,16 +54,22 @@ function DaysSection({ date, transactions }: SectionProps) {
         </View>
       </Wrapper>
 
-      {transactions.map((transaction) => (
-        <React.Fragment key={(transaction as any)._id}>
-          <Divider />
+      {/* FIXME: Issue with scrolling */}
+      <ScrollView>
+        {transactions
+          .sort(
+            (a, b) =>
+              new Date(b.date as any).valueOf() -
+              new Date(a.date as any).valueOf()
+          )
+          .map((transaction) => (
+            <React.Fragment key={(transaction as any)._id}>
+              <Divider />
 
-          <Wrapper style={$style(styles.wrapper)}>
-            <DayItem transaction={transaction} />
-          </Wrapper>
-        </React.Fragment>
-      ))}
-
+              <DayItem transaction={transaction} />
+            </React.Fragment>
+          ))}
+      </ScrollView>
       <Divider />
     </View>
   )
