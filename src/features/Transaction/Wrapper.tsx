@@ -7,7 +7,7 @@ export default function Wrapper({ style, ...props }: ViewProps) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    maxWidth: 800,
+    maxWidth: 750,
     alignSelf: 'center',
   },
 })
