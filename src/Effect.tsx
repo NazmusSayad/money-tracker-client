@@ -65,26 +65,20 @@ export function PrivateEffect() {
   useAsyncEffect(async () => {
     if (!jwt) return
 
-    Fetch_Transactions: {
-      const { data, ok } = await api.get(`/transactions`)
-      $actions.transactions.setTransactions(data.transactions)
-    }
+    const [{ data: transactions }, { data: categories }, { data: accounts }] =
+      await api.requests(
+        { url: '/transactions' },
+        { url: '/categories' },
+        { url: '/accounts' }
+      )
 
-    Fetch_Accounts: {
-      const { data, ok } = await api.get(`/accounts`)
-      $actions.accounts.setAccounts(data.accounts)
-    }
-
-    Fetch_Categories: {
-      const { data, ok } = await api.get(`/categories`)
-      $actions.categories.setCategories(data.categories)
-    }
-
+    $actions.transactions.setTransactions(transactions.transactions)
+    $actions.categories.setCategories(categories.categories)
+    $actions.accounts.setAccounts(accounts.accounts)
     $actions.main.finishFetchingFromServer()
   }, [Boolean(jwt)])
 
   useEffect(() => {
-    return
     if (os.isWeb) return
     storage.set('user', user)
     storage.set('accounts', accounts)

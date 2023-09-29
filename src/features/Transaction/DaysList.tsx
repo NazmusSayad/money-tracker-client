@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 
   section: {
     backgroundColor: $clr.bgLighter,
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   wrapper: {
@@ -117,7 +117,9 @@ const styles = StyleSheet.create({
 
   transactionsBalanceContainer: {
     flexDirection: 'row',
-    flexBasis: 260,
+    maxWidth: 260,
+    flex: 1,
+    // width: '100%',
   },
 
   income: {
