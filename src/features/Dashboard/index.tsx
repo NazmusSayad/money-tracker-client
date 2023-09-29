@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
   },
 
   main: {
+    maxHeight: '100%',
+    overflow: 'hidden',
     flex: 1,
   },
 

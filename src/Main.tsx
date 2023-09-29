@@ -6,6 +6,14 @@ import Router from './Router'
 import { setGlobal } from './utils'
 import Loading from '@/components/Loading'
 import { backgroundColor } from '../app.config'
+import { injectCSS } from './utils/style'
+
+injectCSS(`
+  html, body, #root {
+    height: 100%;
+  }
+
+`)
 
 export default function Main() {
   const theme = useTheme()

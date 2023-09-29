@@ -39,5 +39,7 @@ export default function index() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    height: '100%',
+  },
 })

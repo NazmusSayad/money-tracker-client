@@ -11,11 +11,20 @@ type Props = {
 }
 
 export default function DaysList({ transactions }: Props) {
-  return Object.entries(transactions)
-    .sort(([a], [b]) => +b - +a)
-    .map(([date, transactions]) => (
-      <DaysSection key={date} date={+date} transactions={transactions} />
-    ))
+  const sortedEntries = useMemo(() => {
+    return Object.entries(transactions).sort(([a], [b]) => +b - +a) as [
+      string,
+      Transaction[]
+    ][]
+  }, [transactions])
+
+  return (
+    <ScrollView style={styles.container}>
+      {sortedEntries.map(([date, transactions]) => (
+        <DaysSection key={date} date={+date} transactions={transactions} />
+      ))}
+    </ScrollView>
+  )
 }
 
 type SectionProps = {
@@ -38,6 +47,13 @@ function DaysSection({ date, transactions }: SectionProps) {
     return { income, expense }
   }, [transactions])
 
+  const sortedTrans = useMemo(() => {
+    return transactions.sort(
+      (a, b) =>
+        new Date(b.date as any).valueOf() - new Date(a.date as any).valueOf()
+    )
+  }, [transactions])
+
   return (
     <View style={styles.section}>
       <Divider />
@@ -54,29 +70,23 @@ function DaysSection({ date, transactions }: SectionProps) {
         </View>
       </Wrapper>
 
-      {/* FIXME: Issue with scrolling */}
-      <ScrollView>
-        {transactions
-          .sort(
-            (a, b) =>
-              new Date(b.date as any).valueOf() -
-              new Date(a.date as any).valueOf()
-          )
-          .map((transaction) => (
-            <React.Fragment key={(transaction as any)._id}>
-              <Divider />
+      {sortedTrans.map((transaction) => (
+        <React.Fragment key={(transaction as any)._id}>
+          <Divider />
 
-              <DayItem transaction={transaction} />
-            </React.Fragment>
-          ))}
-      </ScrollView>
+          <DayItem transaction={transaction} />
+        </React.Fragment>
+      ))}
+
       <Divider />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    height: '100%',
+  },
 
   section: {
     backgroundColor: $clr.bgLighter,

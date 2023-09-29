@@ -2,6 +2,7 @@ import { Transaction } from '@/store/slice/Transactions'
 import { View, StyleSheet } from 'react-native'
 import { Text, TouchableRipple } from 'react-native-paper'
 import Wrapper from './Wrapper'
+import { getTime } from '@/utils'
 
 type Props = {
   transaction: Transaction
@@ -17,18 +18,12 @@ export default function DayItem({ transaction }: Props) {
 
         <View style={styles.noteAndAccount}>
           {(transaction as any).note && (
-            <Text style={styles.noteText}>
-              {(transaction as any).type} {(transaction as any).amount}
-            </Text>
+            <Text style={styles.noteText}>{(transaction as any).note}</Text>
           )}
 
-          {(transaction as any).account && (
-            <Text style={styles.accountText}>
-              {(transaction as any).type} {(transaction as any).amount}
-            </Text>
-          )}
-
-          <Text style={styles.accountText}>{(transaction as any).date}</Text>
+          <Text style={styles.dateText}>
+            {getTime((transaction as any).date)}
+          </Text>
         </View>
 
         <Text
@@ -63,7 +58,7 @@ const styles = StyleSheet.create({
 
   noteText: {},
 
-  accountText: {
+  dateText: {
     fontSize: 12,
     color: $clr.bgWhitest,
   },

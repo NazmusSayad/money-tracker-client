@@ -26,10 +26,6 @@ export function getMonthName(index: number) {
   ][index]
 }
 
-export function getDayName(index: number) {
-  return ['Sunday'][index]
-}
-
 export function flattenObject(obj) {
   let result: any[] = []
 
@@ -58,6 +54,14 @@ export function parseDate(dateStr: string) {
       .toLocaleDateString('en-US', { weekday: 'long' })
       .split(',')[0],
   }
+}
+
+export function getTime(date) {
+  const timeString = new Date(date).toLocaleTimeString('en-US', {
+    timeStyle: 'short',
+  })
+  const regexPattern = /(\d{1,2}:\d{1,2}):\d{1,2} (\w{2})/
+  return timeString.replace(regexPattern, '$1 $2')
 }
 
 console.log(parseDate(new Date().toISOString()))
