@@ -9,7 +9,7 @@ export default function useTotalBalance(
   selectedYear,
   selectedMonth
 ) {
-  const allTrans = useTransactions(
+  const allTrans: any = useTransactions(
     restorePrev ? undefined : selectedYear,
     restorePrev ? undefined : selectedMonth
   )

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { createSlice } from 'react-rtk'
-const matchRegex = /^(?<year>\d+)-(?<month>\d+)-(?<date>\d+)/
+import { parseDate } from '@/utils'
 
-type Transaction = Record<string, unknown>
+export type Transaction = Record<string, unknown>
 
 type InitialTransacitonsState = {
   [year: string]: {
@@ -130,7 +130,7 @@ export function useTransactions(year?: number, month?: number) {
     return result
   }, [transactions, localTransactions, year, month])
 
-  return combinedTransactions
+  return combinedTransactions as unknown
 }
 
 function addTransactionsToTarget(
@@ -138,14 +138,11 @@ function addTransactionsToTarget(
   transactions: Transaction[]
 ) {
   transactions.forEach((transaction: any) => {
-    const { year, month, date } = transaction.date.match(matchRegex).groups
-    const numYear = +year
-    const numMonth = +month - 1
-    const numDate = +date
+    const { year, month, date } = parseDate(transaction.date)
 
-    target[numYear] ??= {}
-    target[numYear][numMonth] ??= {}
-    target[numYear][numMonth][numDate] ??= []
-    target[numYear][numMonth][numDate].push(transaction)
+    target[year] ??= {}
+    target[year][month] ??= {}
+    target[year][month][date] ??= []
+    target[year][month][date].push(transaction)
   })
 }

@@ -3,7 +3,8 @@ import { View, StyleSheet } from 'react-native'
 import { Divider, Text } from 'react-native-paper'
 import DatePicker from '@/components/DatePicker'
 import HeaderStatus from './HeaderStatus'
-import { useTransactions } from '@/store/slice/Transactions'
+import { Transaction, useTransactions } from '@/store/slice/Transactions'
+import DaysList from './DaysList'
 
 export default function index() {
   const [month, setMonth] = useState(new Date().getMonth())
@@ -24,9 +25,15 @@ export default function index() {
         setYear={setYear}
         setMonth={setMonth}
       />
+
       <Divider />
       <HeaderStatus transactions={transactions} year={year} month={month} />
-      <Divider />
+
+      {type === 'Monthly' ? (
+        <DaysList
+          transactions={transactions as Record<string, Transaction[]>}
+        />
+      ) : null}
     </View>
   )
 }
