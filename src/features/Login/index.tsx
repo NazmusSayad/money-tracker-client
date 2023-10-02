@@ -8,17 +8,17 @@ export default function index() {
   const [password, setPassword] = useState('')
 
   async function handleSubmit() {
-    const { data, ok } = await api.post<
-      [{ jwt_token: string; user }, any, any]
-    >('/auth/login', { email, password })
+    const { data, ok } = await api.post<{ data: { jwt_token: string; user } }>(
+      '/auth/login',
+      { email, password }
+    )
     if (!ok) return
-
-    $actions.auth.jwt(data.jwt_token)
+    data && $actions.auth.jwt(data.jwt_token)
   }
 
   return (
     <LoginForm
-      error={api.error}
+      error={api.response?.error}
       email={email}
       setEmail={setEmail}
       password={password}

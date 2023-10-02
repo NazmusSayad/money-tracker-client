@@ -53,12 +53,12 @@ export function PrivateEffect() {
   const transactions = $useStore((state) => state.transactions)
 
   useAsyncEffect(async () => {
-    const { data, ok } = await api.get<[{ jwt_token: string; user }]>(
+    const { data, ok } = await api.get<{ data: { jwt_token: string; user } }>(
       '/auth/token'
     )
 
-    $actions.auth.jwt(data?.jwt_token)
-    $actions.user.setUser(data?.user)
+    data?.jwt_token && $actions.auth.jwt(data?.jwt_token)
+    data?.user && $actions.user.setUser(data?.user)
     console.log(ok ? 'JWT_TOKEN updated!' : 'JWT_TOKEN update failed!')
   })
 
@@ -66,7 +66,7 @@ export function PrivateEffect() {
     if (!jwt) return
 
     const [{ data: transactions }, { data: categories }, { data: accounts }] =
-      await api.requests(
+      await api.requests<[{ data: any }, { data: any }, { data: any }]>(
         { url: '/transactions' },
         { url: '/categories' },
         { url: '/accounts' }

@@ -51,11 +51,15 @@ const styles = StyleSheet.create({
   },
 
   wrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
     height: '100%',
     cursor: 'default',
   } as any,
 
   content: {
+    width: '100%',
+    height: '100%',
     cursor: 'default',
   } as any,
 })
