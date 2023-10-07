@@ -1,7 +1,7 @@
 import ReactApi from 'react-net-kit'
 const reactApi = ReactApi({
   withCredentials: true,
-  baseURL: 'https://money-tracker-oiw9.onrender.com/',
+  baseURL: 'https://api.money.nazmussayad.com',
 })
 
 export default reactApi.axios

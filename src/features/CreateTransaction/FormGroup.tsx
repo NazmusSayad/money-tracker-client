@@ -1,18 +1,22 @@
+import { Text, TextInputProps } from 'react-native-paper'
+import { StyleSheet, TextInput, Pressable, PressableProps } from 'react-native'
 import { useState } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
-import { Text, TextInputProps, ButtonProps, Button } from 'react-native-paper'
 
 type ChildType = 'input' | 'button'
 type Props<T extends ChildType> = {
   label: string
+  placeholder?: string
   type: T
-} & Omit<T extends 'input' ? TextInputProps : ButtonProps, 'children'>
+} & Omit<T extends 'input' ? TextInputProps : PressableProps, 'children'>
 
 export default function FormGroup<T extends ChildType>({
-  label,
   type,
+  label,
+  placeholder,
   ...props
 }: Props<T>) {
+  const [isFocused, setIsFocused] = useState(false)
+
   return (
     <View style={styles.group}>
       <Text variant="labelLarge" style={styles.label}>
@@ -21,42 +25,46 @@ export default function FormGroup<T extends ChildType>({
 
       <View style={styles.inputContainer}>
         {type === 'button' ? (
-          <Button
-            {...props}
-            mode="text"
-            style={styles.button}
-            labelStyle={{ margin: 0, padding: 0 }}
-            contentStyle={{ margin: 0, padding: 0 }}
-          >
-            {label}
-          </Button>
+          <Pressable {...props} style={styles.button}>
+            <Text>{placeholder || ' '}</Text>
+          </Pressable>
         ) : (
           <TextInput
             {...(props as any)}
-            style={styles.input}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            style={$style(
+              styles.input,
+              isFocused && { borderBottomColor: $clr.primary }
+            )}
             autoComplete={'off'}
-            placeholder="eg: 100"
-            keyboardType="number-pad"
-            selectionColor={'transparent'}
           />
         )}
-
-        <View style={styles.underline} />
       </View>
     </View>
   )
 }
 
+const commonStyles = StyleSheet.create({
+  input: {
+    color: $clr.inverseSurface,
+    fontSize: 15,
+    paddingHorizontal: 5,
+    borderBottomColor: $clr.secondary,
+    borderBottomWidth: 1,
+    marginBottom: 2,
+    outlineWidth: 0,
+  },
+})
 const styles = StyleSheet.create({
   group: {
-    backgroundColor: '#fff',
     marginBottom: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   label: {
-    width: 70,
+    width: 65,
   },
 
   inputContainer: {
@@ -66,15 +74,13 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    fontSize: 15,
+    ...commonStyles.input,
   },
 
   button: {
-    fontSize: 15,
+    ...commonStyles.input,
+    cursor: 'pointer',
     margin: 0,
     padding: 0,
-    lineHeight: 0,
   },
-
-  underline: {},
 })

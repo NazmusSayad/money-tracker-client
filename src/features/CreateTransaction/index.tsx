@@ -84,7 +84,7 @@ export default function index({ visible }) {
   )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   wrapper: {
     paddingVertical: 25,
     paddingHorizontal: '5%',
